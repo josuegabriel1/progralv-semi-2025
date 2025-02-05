@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi primera aplicacion con HTML + CSS + JS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <br>
+    <div id="app">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-7">
+                    <form id="frmAlumno" name="frmAlumno" @submit.prevent="guardarAlumno">
+                        <div class="card border-dark mb-4">
+                            <div class="card-header bg-dark text-white">Registro del Alumnos</div>
+                            <div class="card-body">
+                                <div class="row p-1">
+                                    <div class="col-3 col-md-3">CODIGO</div>
+                                    <div class="col-6 col-md-4">
+                                        <input required v-model="codigo" type="text" name="txtCodigoAlumno" id="txtCodigoAlumno" class="form-control">
+                                    </div>
+                                    <div class="col-3 col-md-2">
+                                        <button type="button" class="btn btn-info btn-sm" @click="buscarAlumno">Buscar</button>
+                                    </div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 col-md-3">NOMBRE</div>
+                                    <div class="col-9 col-md-6">
+                                        <input required pattern="[A-Za-zñÑáéíóú ]{3,150}" v-model="nombre" type="text" name="txtNombreAlumno" id="txtNombreAlumno" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 col-md-3">DIRECCION</div>
+                                    <div class="col-9 col-md-8">
+                                        <input required v-model="direccion" type="text" name="txtDireccionAlumno" id="txtDireccionAlumno" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 col-md-3">MUNICIPIO</div>
+                                    <div class="col-9 col-md-6">
+                                        <input v-model="municipio" type="text" name="txtMunicipioAlumno" id="txtMunicipioAlumno" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 col-md-3">DEPARTAMENTO</div>
+                                    <div class="col-9 col-md-6">
+                                        <input v-model="departamento" type="text" name="txtDepartamentoAlumno" id="txtDepartamentoAlumno" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 col-md-3">TELEFONO</div>
+                                    <div class="col-9 col-md-6">
+                                        <input v-model="telefono" type="text" name="txtTelefonoAlumno" id="txtTelefonoAlumno" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 col-md-3">FECHA NACICMIENTO</div>
+                                    <div class="col-9 col-md-6">
+                                        <input v-model="fechaNacimiento" type="date" name="txtFechaNacimientoAlumno" id="txtFechaNacimientoAlumno" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-3 col-md-3">SEXO</div>
+                                    <div class="col-9 col-md-6">
+                                        <select v-model="sexo" name="txtSexoAlumno" id="txtSexoAlumno" class="form-select">
+                                            <option value="" disabled>Seleccione...</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-dark text-center">
+                                <input type="submit" :value="botonTexto" class="btn btn-primary"> 
+                                <input type="reset" value="Nuevo" class="btn btn-warning" @click="limpiarFormulario">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="col-6">
+                    <table class="table table-sm table-bordered table-hover">
+                        <thead>
+                            <div class="card border-dark mb-10">
+                                <div class="card-header bg-dark text-white"><center>TABLA DE ALUMNOS</center></div>
+                            </div>
+                            <tr>
+                                <th>CODIGO</th>
+                                <th>NOMBRE</th>
+                                <th>DIRECCION</th>
+                                <th>MUNICIPIO</th>
+                                <th>DEPARTAMENTO</th>
+                                <th>TELEFONO</th>
+                                <th>FECHA nacimiento</th>
+                                <th>SEXO</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="alumno in alumnos" @click="verAlumno(alumno)" :key="alumno.codigo">
+                                <td>{{ alumno.codigo }}</td>
+                                <td>{{ alumno.nombre }}</td>
+                                <td>{{ alumno.direccion }}</td>
+                                <td>{{ alumno.municipio }}</td>
+                                <td>{{ alumno.departamento }}</td>
+                                <td>{{ alumno.telefono }}</td>
+                                <td>{{ alumno.fechaNacimiento }}</td>
+                                <td>{{ alumno.sexo }}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" 
+                                        @click="eliminarAlumno(alumno)">DEL</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
